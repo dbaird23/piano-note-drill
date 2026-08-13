@@ -611,38 +611,36 @@
   }
 
   // Mini keyboard on the card back: F2–C6 with the target key highlighted.
+  // The white keys share the width evenly and the black keys are placed as a
+  // percentage across, so the whole keyboard scales with the card.
   function keyboardHtml(targetMidi) {
     const blackSet = { 1: 1, 3: 1, 6: 1, 8: 1, 10: 1 };
     let whites = "";
     let blacks = "";
+    let count = 0;
+    for (let m = MIN_MIDI; m <= MAX_MIDI; m++) if (!blackSet[m % 12]) count++;
+
     for (let m = MIN_MIDI; m <= MAX_MIDI; m++) {
       const pc = m % 12;
       if (blackSet[pc]) continue;
       const on = m === targetMidi;
-      const isC = pc === 0;
-      whites += '<div style="width: 13px; height: 68px; box-sizing: border-box; margin-left: -1px; border: 1px solid ' +
-        (on ? "#8a6b6b" : "#ddd2cb") + "; border-radius: 0 0 3px 3px; position: relative; background: " +
-        (on ? "#997373" : "#ffffff") + ';">' +
-        (isC
-          ? '<div style="position: absolute; bottom: 3px; left: 0; right: 0; text-align: center; line-height: 1; font-size: ' +
-            (m === 60 ? "7px" : "10px") + "; color: " +
-            (on ? "#ffffff" : m === 60 ? "#8a6b6b" : "#cabbb4") + ';">' +
-            (m === 60 ? "C4" : "·") + "</div>"
-          : "") +
+      whites += '<div class="kb-w' + (on ? " on" : "") + '">' +
+        (pc === 0 ? '<div class="kb-c' + (m === 60 ? " kb-mid" : "") + '">' + (m === 60 ? "C4" : "·") + "</div>" : "") +
         "</div>";
     }
-    // black keys sit between the white keys that flank them
+
+    // A black key straddles the join between the two white keys it sits between.
     let idx = -1;
     for (let m = MIN_MIDI; m <= MAX_MIDI; m++) {
       const pc = m % 12;
       if (!blackSet[pc]) { idx++; continue; }
       if (idx < 0) continue;
       const on = m === targetMidi;
-      blacks += '<div style="position: absolute; top: 0; left: ' + ((idx + 1) * 12 - 4) +
-        "px; width: 8px; height: 42px; border-radius: 0 0 2px 2px; z-index: 2; background: " +
-        (on ? "#997373" : "#3a2e2c") + ';"></div>';
+      blacks += '<div class="kb-b' + (on ? " on" : "") + '" style="left: ' +
+        (((idx + 1) / count) * 100).toFixed(3) + "%; width: " +
+        ((100 * (2 / 3)) / count).toFixed(3) + '%;"></div>';
     }
-    return '<div style="display: flex;">' + whites + "</div>" + blacks;
+    return '<div class="kb-whites">' + whites + "</div>" + blacks;
   }
 
   const roundBtn = "height: 44px; padding: 0 22px; border-radius: 999px; font-family: 'Jost', sans-serif; font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; white-space: nowrap; cursor: pointer; border: 1px solid ";

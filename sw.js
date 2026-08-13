@@ -4,9 +4,9 @@ const CACHE = "piano-drill-v2";
 const SHELL = [
   "./",
   "./index.html",
-  "./styles.css?v=5",
+  "./styles.css?v=8",
   "./music.js?v=3",
-  "./app.js?v=3",
+  "./app.js?v=4",
   "./scales.js?v=5",
   "./manifest.json",
   "./icons/favicon.svg",

@@ -134,8 +134,8 @@ body[data-view="scales"] #cardsView {
 }
 
 .card {
-  width: 380px;
-  height: 532px;
+  width: min(380px, 100%);
+  aspect-ratio: 380 / 532;
   perspective: 1600px;
   cursor: pointer;
   user-select: none;
@@ -184,7 +184,7 @@ body[data-view="scales"] #cardsView {
 
 .note-name {
   font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 88px;
+  font-size: clamp(58px, 23vw, 88px);
   font-weight: 500;
   line-height: 1;
 }
@@ -194,12 +194,73 @@ body[data-view="scales"] #cardsView {
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: #a99891;
+  text-align: center;
 }
 
 .keys-wrap {
   position: relative;
+  width: 100%;
   height: 68px;
   margin-top: 14px;
+}
+
+.kb-whites {
+  display: flex;
+  height: 100%;
+}
+
+.kb-w {
+  flex: 1 1 0;
+  min-width: 0;
+  position: relative;
+  box-sizing: border-box;
+  background: #ffffff;
+  border: 1px solid #ddd2cb;
+  border-right-width: 0;
+  border-radius: 0 0 3px 3px;
+}
+
+.kb-w:last-child {
+  border-right-width: 1px;
+}
+
+.kb-w.on {
+  background: #997373;
+  border-color: #8a6b6b;
+}
+
+.kb-c {
+  position: absolute;
+  bottom: 3px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  line-height: 1;
+  font-size: 10px;
+  color: #cabbb4;
+}
+
+.kb-mid {
+  font-size: 7px;
+  color: #8a6b6b;
+}
+
+.kb-w.on .kb-c {
+  color: #ffffff;
+}
+
+.kb-b {
+  position: absolute;
+  top: 0;
+  height: 62%;
+  transform: translateX(-50%);
+  border-radius: 0 0 2px 2px;
+  z-index: 2;
+  background: #3a2e2c;
+}
+
+.kb-b.on {
+  background: #997373;
 }
 
 .controls {
@@ -592,6 +653,7 @@ body[data-view="scales"] #cardsView {
   font-size: 24px;
   font-weight: 400;
   line-height: 1;
+  white-space: nowrap;
   color: #a99891;
   padding-bottom: 8px;
 }
@@ -837,6 +899,74 @@ body[data-view="scales"] #cardsView {
 }
 
 @media (max-width: 720px) {
+  .page {
+    padding: 28px 14px;
+    gap: 24px;
+  }
+
+  .view {
+    gap: 24px;
+  }
+
+  /* The chip rows are wider than a phone; let them stack instead of scroll. */
+  .deck-bar {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .deck-bar .divider {
+    display: none;
+  }
+
+  /* Without a width the column is as wide as its widest row, which lets the
+     bars below stretch past the screen even though they can wrap. */
+  .controls {
+    width: 100%;
+  }
+
+  .transport {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .card-front {
+    padding: 20px;
+  }
+
+  .card-back {
+    padding: 16px;
+  }
+
+  .heard-group {
+    min-width: 0;
+  }
+
+  .overlay {
+    padding: 14px;
+  }
+
+  .modal {
+    padding: 24px 20px 20px;
+    gap: 18px;
+  }
+
+  .scale-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .dialog-actions,
+  .dialog-actions > div {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .text-btn,
+  .ghost-btn,
+  .dark-btn {
+    padding: 0 14px;
+  }
+
   .system {
     padding: 16px 12px 12px;
   }
