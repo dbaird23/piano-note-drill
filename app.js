@@ -3,27 +3,17 @@
 (() => {
   "use strict";
 
-  const LETTERS = ["C", "D", "E", "F", "G", "A", "B"];
-  const SEMI = { C: 0, D: 2, E: 4, F: 5, G: 7, A: 9, B: 11 };
+  const M = window.Music;
+  const LETTERS = M.LETTERS;
+  const step = M.step;
+  const midiOf = M.midiOf;
+  const staffY = M.staffY;
+  const ledgersFor = M.ledgersFor;
+  const nameOfMidi = M.nameOfMidi;
+
   const MIN_MIDI = 41; // F2
   const MAX_MIDI = 84; // C6
   const GAME_LENGTH = 20;
-
-  function step(letter, oct) { return oct * 7 + LETTERS.indexOf(letter); }
-  function midiOf(letter, oct, acc) { return (oct + 1) * 12 + SEMI[letter] + (acc === "#" ? 1 : acc === "b" ? -1 : 0); }
-
-  // Staff y: 6px per diatonic step. Treble bottom line E4 = 68; bass bottom line G2 = 68.
-  function staffY(clef, letter, oct) {
-    const base = clef === "treble" ? step("E", 4) : step("G", 2);
-    return 68 - 6 * (step(letter, oct) - base);
-  }
-
-  function ledgersFor(y) {
-    const out = [];
-    for (let p = 8; p >= y; p -= 12) out.push(p);
-    for (let p = 80; p <= y; p += 12) out.push(p);
-    return out;
-  }
 
   function position(y) {
     if (y === 74) return "just below the staff";
@@ -81,11 +71,6 @@
       if (c.letter !== "C" && c.letter !== "F" && midiOf(c.letter, c.oct, "b") >= MIN_MIDI) out.push(makeCard(c.clef, c.letter, c.oct, "b"));
     });
     return out;
-  }
-
-  function nameOfMidi(m) {
-    const names = ["C", "C♯", "D", "E♭", "E", "F", "F♯", "G", "A♭", "A", "B♭", "B"];
-    return names[((m % 12) + 12) % 12] + (Math.floor(m / 12) - 1);
   }
 
   // ACF2+ autocorrelation pitch detection.
@@ -903,7 +888,20 @@
     else if (e.key === "Escape") { dom.refInput.value = state.refA; dom.refInput.blur(); }
   });
 
+  // Leaving the drill must not leave its metronome or the mic running behind
+  // the scales page.
+  window.addEventListener("viewchange", (e) => {
+    if (e.detail.view === "cards") return;
+    stopClock();
+    if (state.listening) stopListening();
+    state.playing = false;
+    state.beat = 0;
+    if (state.mode === "game") exitGame();
+    else render();
+  });
+
   window.addEventListener("keydown", (e) => {
+    if (document.body.dataset.view !== "cards") return;
     if (e.target.matches("input, select, textarea")) return;
     if (state.dialogStep || state.mode !== "practice") return;
     if (e.key === "ArrowRight") { e.preventDefault(); advance(); }

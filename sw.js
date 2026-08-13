@@ -1,11 +1,13 @@
 // Cache-first service worker. Bump CACHE when shipping changes so clients
 // refetch the app shell (the ?v= query strings must match index.html).
-const CACHE = "piano-drill-v1";
+const CACHE = "piano-drill-v2";
 const SHELL = [
   "./",
   "./index.html",
-  "./styles.css?v=1",
-  "./app.js?v=1",
+  "./styles.css?v=5",
+  "./music.js?v=3",
+  "./app.js?v=3",
+  "./scales.js?v=5",
   "./manifest.json",
   "./icons/favicon.svg",
   "./icons/icon-192.png",

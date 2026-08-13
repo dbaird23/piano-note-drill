@@ -26,6 +26,53 @@ a:hover { color: #2a2120; }
   background: #f3ece8;
 }
 
+.tab-group {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: #ffffff;
+  border: 1px solid #e3d9d4;
+  border-radius: 999px;
+  padding: 5px;
+}
+
+.tab {
+  height: 34px;
+  padding: 0 20px;
+  border: 0;
+  border-radius: 999px;
+  background: none;
+  color: #a99891;
+  font-family: 'Jost', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.tab:hover {
+  color: #2a2120;
+}
+
+.tab.active {
+  background: #2a2120;
+  color: #ffffff;
+}
+
+.view {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 34px;
+  width: 100%;
+}
+
+body[data-view="cards"] #scalesView,
+body[data-view="scales"] #cardsView {
+  display: none;
+}
+
 .header {
   display: flex;
   align-items: baseline;
@@ -230,6 +277,11 @@ a:hover { color: #2a2120; }
   font-weight: 500;
   width: 48px;
   text-align: right;
+}
+
+.tempo-slider {
+  width: 130px;
+  accent-color: #997373;
 }
 
 .beats-select {
@@ -562,4 +614,260 @@ a:hover { color: #2a2120; }
   line-height: 1.55;
   color: #6f605a;
   text-wrap: pretty;
+}
+
+/* ---- Scales & patterns ---- */
+
+.scales-view {
+  gap: 26px;
+}
+
+.routine-note {
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  color: #a99891;
+  text-align: center;
+  text-wrap: pretty;
+  margin-top: -18px;
+}
+
+.key-bar {
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 100%;
+}
+
+.key-bar .seg-btn {
+  min-width: 52px;
+  padding: 0 12px;
+}
+
+.systems {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 26px;
+  width: 100%;
+  max-width: 820px;
+}
+
+.system {
+  background: #ffffff;
+  border: 1px solid #e3d9d4;
+  border-radius: 12px;
+  box-shadow: 0 18px 40px -30px rgba(42, 33, 32, 0.45);
+  padding: 20px 24px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.system-head {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.system-title {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 22px;
+  font-weight: 500;
+}
+
+.system-sub {
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #a99891;
+}
+
+.staff-wrap {
+  position: relative;
+  align-self: flex-start;
+  max-width: 100%;
+}
+
+.staff-wrap svg {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+  display: block;
+}
+
+.staff-line {
+  stroke: #9b8d86;
+  stroke-width: 1.1;
+}
+
+.brace {
+  stroke: #2a2120;
+  stroke-width: 2.4;
+}
+
+.barline {
+  stroke: #9b8d86;
+  stroke-width: 1.1;
+}
+
+.barline-thick {
+  fill: #2a2120;
+}
+
+.clef,
+.sig {
+  font-family: 'Bravura', serif;
+  font-size: 48px;
+  fill: #2a2120;
+}
+
+.rest {
+  fill: #6f605a;
+}
+
+/* One `color` per event drives every glyph in it, so lighting the note being
+   played is a single class change rather than a redraw. */
+.ev {
+  color: #2a2120;
+}
+
+.ev.played {
+  color: #c6b7b0;
+}
+
+.ev.now {
+  color: #997373;
+}
+
+.ev .nh,
+.ev .stem {
+  fill: currentColor;
+  transition: fill 90ms linear;
+}
+
+.ev .nh-open {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.4;
+  transition: stroke 90ms linear;
+}
+
+.ev .ledger {
+  stroke: currentColor;
+  stroke-width: 1.1;
+  transition: stroke 90ms linear;
+}
+
+.ev .halo {
+  fill: transparent;
+  transition: fill 120ms linear;
+}
+
+.ev.now .halo {
+  fill: #f6e9e5;
+}
+
+.note-labels {
+  position: relative;
+  height: 18px;
+  margin-top: 2px;
+}
+
+.note-label {
+  position: absolute;
+  top: 0;
+  transform: translateX(-50%);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+  color: #a99891;
+  transition: color 90ms linear;
+}
+
+.note-label.played {
+  color: #d3c6bf;
+}
+
+.note-label.now {
+  color: #997373;
+}
+
+.systems.hide-names .note-labels {
+  visibility: hidden;
+}
+
+.count-in {
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Jost', sans-serif;
+  font-size: 20px;
+  font-weight: 500;
+  color: #997373;
+  border: 1px solid transparent;
+  opacity: 0;
+  transition: opacity 120ms linear;
+}
+
+.count-in.on {
+  opacity: 1;
+  border-color: #dccfc8;
+  background: #ffffff;
+}
+
+.pill-btn.stopping {
+  border-color: #997373;
+  background: #997373;
+  color: #fff;
+}
+
+.pill-btn.toggle {
+  border-color: #dccfc8;
+  background: #f7f1ee;
+  color: #2a2120;
+}
+
+.pill-btn.toggle.off {
+  border-color: #e8ded9;
+  background: #ffffff;
+  color: #b3a49d;
+}
+
+@media (max-width: 720px) {
+  .system {
+    padding: 16px 12px 12px;
+  }
+
+  /* Short systems keep their proportional width on a wide screen; on a phone
+     every staff should use the whole card or the notes get too small to read. */
+  .staff-wrap {
+    width: 100% !important;
+  }
+
+  .bar {
+    padding: 12px 14px;
+    gap: 12px 14px;
+  }
+
+  .bar-group {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .tempo-slider {
+    width: 96px;
+  }
+
+  .key-bar {
+    gap: 6px;
+    padding: 8px;
+  }
+
+  .key-bar .seg-btn {
+    min-width: 44px;
+    padding: 0 8px;
+  }
 }

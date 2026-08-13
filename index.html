@@ -14,11 +14,18 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=1">
+<link rel="stylesheet" href="styles.css?v=5">
 </head>
-<body>
+<body data-view="cards">
 
 <div class="page">
+
+  <div class="tab-group">
+    <button id="tabCards" class="tab active">Flashcards</button>
+    <button id="tabScales" class="tab">Scales &amp; patterns</button>
+  </div>
+
+  <div class="view" id="cardsView">
 
   <div class="header">
     <div class="title" id="heading">Piano note drill</div>
@@ -78,7 +85,7 @@
       <div class="bar-group">
         <div class="bar-label">Tempo</div>
         <button id="bpmDown" class="circle-btn" style="width: 32px; height: 32px; font-size: 17px; line-height: 1;">&minus;</button>
-        <input type="range" id="bpmSlider" min="30" max="160" step="1" value="60" style="width: 130px; accent-color: #997373;">
+        <input type="range" id="bpmSlider" class="tempo-slider" min="30" max="160" step="1" value="60">
         <button id="bpmUp" class="circle-btn" style="width: 32px; height: 32px; font-size: 17px; line-height: 1;">+</button>
         <div class="bpm-value" id="bpmVal">60</div>
       </div>
@@ -195,9 +202,57 @@
     </div>
   </div>
 
+  </div><!-- /cardsView -->
+
+  <div class="view scales-view" id="scalesView">
+
+    <div class="header">
+      <div class="title">Scales &amp; patterns</div>
+      <div class="counter" id="scaleKeyName">Key of C</div>
+    </div>
+
+    <div class="routine-note">
+      Five-finger pattern, open 5th, then the arpeggio &mdash; straight through, at metronome 80.
+    </div>
+
+    <div class="deck-bar key-bar" id="keyRow"></div>
+
+    <div class="systems" id="systems"></div>
+
+    <div class="controls">
+
+      <div class="transport">
+        <button id="btnScalePlay" class="pill-btn">Play</button>
+        <div class="count-in" id="countInBadge"></div>
+      </div>
+
+      <div class="bar">
+        <div class="bar-group">
+          <div class="bar-label">Tempo</div>
+          <button id="scaleBpmDown" class="circle-btn" style="width: 32px; height: 32px; font-size: 17px; line-height: 1;">&minus;</button>
+          <input type="range" id="scaleBpmSlider" class="tempo-slider" min="40" max="160" step="1" value="80">
+          <button id="scaleBpmUp" class="circle-btn" style="width: 32px; height: 32px; font-size: 17px; line-height: 1;">+</button>
+          <div class="bpm-value" id="scaleBpmVal">80</div>
+        </div>
+        <div class="divider"></div>
+        <button id="btnScaleLoop" class="pill-btn toggle">Loop on</button>
+        <div class="divider"></div>
+        <button id="btnScaleClick" class="pill-btn toggle">Click on</button>
+        <div class="divider"></div>
+        <button id="btnScaleNames" class="pill-btn toggle">Note names on</button>
+      </div>
+
+      <div class="footnote">Press play and follow the highlighted note &middot; space plays</div>
+
+    </div>
+
+  </div><!-- /scalesView -->
+
 </div>
 
-<script src="app.js?v=1"></script>
+<script src="music.js?v=3"></script>
+<script src="app.js?v=3"></script>
+<script src="scales.js?v=5"></script>
 <script>
 // Skip the service worker during local dev so edits always show up fresh.
 if ("serviceWorker" in navigator && location.hostname !== "localhost" && location.hostname !== "127.0.0.1") {

@@ -4,7 +4,7 @@ Flashcard drills for learning to read piano notes — built as an installable PW
 
 **Live app:** https://dbaird23.github.io/piano-note-drill/
 
-## Features
+## Flashcards
 
 - Four decks: **Landmarks** (guide notes), **Treble** (C4–G5), **Bass** (F2–C4), and **Everything** (F2–C6), with an optional sharps & flats mode
 - Real engraving: treble and bass clefs (Bravura font), ledger lines, accidentals, correct stem direction
@@ -12,6 +12,25 @@ Flashcard drills for learning to read piano notes — built as an installable PW
 - Metronome with adjustable tempo, beats per card, and auto-flip
 - **Listening mode**: uses the microphone to hear the note you play and check it, with a guided setup that calibrates to your piano's tuning
 - **Listening round**: a scored 20-card game against the clock
+
+## Scales & patterns
+
+The Pre-Prep level technique routine, written out on a grand staff in any of the
+twelve keys of the transposition rotation:
+
+1. **Scales** — the major five-finger pattern ("tonic, whole, whole, half, whole,
+   then back down"), ascending and descending, hands separately, one note per beat
+2. **Open 5th chord** — hands together, held for four beats
+3. **Arpeggio** — hand over hand across two octaves, ascending only
+
+Press **Play** and it counts in four beats, then plays straight through all three
+sections at metronome 80, lighting each note as it sounds so you can follow along
+the way you would with the lesson video. Notes already played fade out behind the
+one currently sounding. Tempo, looping, the metronome click, and the note-name
+labels under the staff can each be turned up or off.
+
+Keys are spelled properly per key signature — F♯ major gets E♯, D♭ major gets
+F♮ — so the notation matches what a teacher would write.
 
 ## Install as an app
 
